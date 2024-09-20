@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="bindingApp.MainPage"
+             x:Name="thisPage">
+
+    <StackLayout>
+        <Slider Minimum="0"
+                Maximum="360"
+                ThumbColor="Brown"
+                Value="0"
+                ValueChanged="Slider_ValueChanged"
+                x:Name="SliderRotation"
+                Margin="20,200,20,0"
+                BindingContext="{x:Reference SliderRotation}"
+                Rotation="{Binding Path=Value}"
+                RotationX="{Binding Path=Value}"
+                RotationY="{Binding Path=Value}"/>
+        <Label Text="{Binding Source={x:Reference SliderRotation}, Path=Value}"/>
+        <Label Text="label"
+                
+               FontSize="60"
+               x:Name="LabelRotation"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               Margin="0,150,50,0"
+               RotationX="0"/>
+        <Label Text="Podja wartość:"/>
+        <Entry Text="{Binding Path=Message, Source={Reference thisPage}}"/>
+        <Button Clicked="Button_Clicked"
+                Text="Wykonaj"/>
+        <Label Text="{Binding Path= ReturnMessage, Source={Reference thisPage}}"/>
+    </StackLayout>
+
+</ContentPage>

@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SimpleCalc.MainPage">
+    <StackLayout>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Pierwsza liczba"
+                   FontSize="20"
+                   BackgroundColor="AliceBlue"
+                   VerticalOptions="Center">
+            </Label>
+            <Entry HorizontalOptions="FillAndExpand"
+                   x:Name="firstNumberEntry"/>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Dróga liczba"
+                   FontSize="20"
+                   BackgroundColor="AliceBlue"
+                   VerticalOptions="Center">
+            </Label>
+            <Entry HorizontalOptions="FillAndExpand"
+                   x:Name="secondNumberEntry"/>
+        </StackLayout>
+        <Label Text="Operacja do wykonana"/>
+        <RadioButton Content="+"
+                     x:Name="addition"/>
+        <RadioButton Content="-"
+                     x:Name="sub"/>
+        <RadioButton Content="*"
+                     x:Name="multi"/>
+        <RadioButton Content="/"
+                     x:Name="div"/>
+        <Button Text="Oblicz"
+                HorizontalOptions="Center"
+                Clicked="Button_Clicked"/>
+        <Label x:Name="result"/>
+    </StackLayout>
+
+
+</ContentPage>
