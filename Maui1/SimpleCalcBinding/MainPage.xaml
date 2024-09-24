@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SimpleCalcBinding.MainPage"
+             x:Name="thisPage"
+             BindingContext="{x:Reference thisPage}"
+             Title="{Binding Result}">
+    <StackLayout>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Pierwsza liczba:"
+                   Background="Bisque"
+                   FontSize="20"
+                   VerticalOptions="Center"/>
+            <Entry HorizontalOptions="FillAndExpand"
+                   x:Name="firstNumberEntry"
+                   Text="{Binding FirstNumber}"/>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+        <Label Text="Druga liczba:"
+                   Background="Bisque"
+                   FontSize="20"
+                   VerticalOptions="Center"/>
+        <Entry HorizontalOptions="FillAndExpand"
+                   x:Name="secondNumberEntry"
+               Text="{Binding SecondNumber}"/>
+    </StackLayout>
+
+    <Label Text="Operacja do wykonania:"/>
+
+    <RadioButton Content="+"
+                     x:Name="operationAddRadioButton"
+                 IsChecked="{Binding IsAddition}"/>
+    <RadioButton Content="-"
+                     x:Name="operationSubRadioButton"
+                 IsChecked="{Binding IsSubstraction}"/>
+    <RadioButton Content="*"
+                     x:Name="operationMulRadioButton"
+                 IsChecked="{Binding IsMultiplication}"/>
+    <RadioButton Content="/"
+                     x:Name="operationDivRadioButton"
+                 IsChecked="{Binding IsDivision}"/>
+
+    <Button Text="Oblicz"
+                HorizontalOptions="Center"
+                Clicked="Button_Clicked"/>
+
+    <Label x:Name="resultLabel"
+           Text="{Binding Result}"/>
+
+    </StackLayout>
+
+</ContentPage>
