@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UnitsChangerMAUI.MainPage"
+             x:Name="thisPage"
+             BindingContext="{x:Reference thisPage}">
+
+    <StackLayout>
+        <HorizontalStackLayout>
+            <Picker ItemsSource="{Binding UnitsList}"
+                    SelectedItem="{Binding FirstSelectedUnit}"
+                    HorizontalOptions="StartAndExpand"/>
+            <Picker ItemsSource="{Binding UnitsList}"
+                    SelectedItem="{Binding SecondSelectedUnit}"
+                    HorizontalOptions="EndAndExpand"/>
+        </HorizontalStackLayout>
+        <Entry Text="{Binding Number}"/>
+        <Button Text="Przelicz"
+                Clicked="Button_Clicked"/>
+        <Label Text="{Binding ResultMessage}"
+               FontSize="20"/>
+        <Label Text="Kalkulator uwzględnia błąd pomiaru"
+               VerticalOptions="End"
+               FontSize="10"/>
+    </StackLayout>
+
+</ContentPage>

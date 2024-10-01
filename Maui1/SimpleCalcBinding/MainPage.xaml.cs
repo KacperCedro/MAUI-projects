@@ -15,6 +15,11 @@
                 result = value;
                 OnPropertyChanged();
             }
+
+
+
+
+
         }
 
         public bool IsAddition { get; set; }

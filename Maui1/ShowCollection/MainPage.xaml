@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ShowCollection.MainPage"
+             x:Name="thisPage"
+             BindingContext="{x:Reference thisPage}">
+
+    <StackLayout>
+        <Label>
+            <Label.Text>Wybierz z listy:</Label.Text>
+        </Label>
+        <Picker>
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>
+                        Banan
+                    </x:String>
+                    <x:String>
+                        Jabłko
+                    </x:String>
+                    <x:String>
+                        mandarynka
+                    </x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
+        <Picker ItemsSource="{Binding FruitsCollection}"
+                SelectedItem="{Binding SelectedFruit}"/>
+        <Button Clicked="Button_Clicked"
+                Text="Pobierz z listy"/>
+        <Label Text="{Binding ReturnMessage}"/>
+        <Entry Text="{Binding TextEntry}"/>
+        <Button x:Name="newFruitButton"
+            Text="+ nowy owoc"
+                Clicked="newFruitButton_Clicked"/>
+        <Button x:Name="removeFruitButton"
+                Text="usun owoc"
+                Clicked="removeFruitButton_Clicked"/>
+    </StackLayout>
+
+</ContentPage>
