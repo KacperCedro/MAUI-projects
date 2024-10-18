@@ -47,7 +47,7 @@ namespace UnitsChangerMAUI
         private void Button_Clicked(object sender, EventArgs e)
         {
             ResultMessage = $"Wartość zmieniona z {FirstSelectedUnit} na {SecondSelectedUnit} to {double.Parse(Number) * (UnitsDictionary[FirstSelectedUnit] / UnitsDictionary[SecondSelectedUnit])} {SecondSelectedUnit} ";
-        }
+        } 
 
     }
 }

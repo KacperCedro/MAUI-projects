@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="temperatureConverterMVVM.MainPage"
+             xmlns:viewModel="clr-namespace:temperatureConverterMVVM">
+
+    <ContentPage.BindingContext>
+        <viewModel:converterViewModel/>
+    </ContentPage.BindingContext>
+    <StackLayout>
+        <Picker  SelectedItem="{Binding SelectedUnit}"
+                 ItemsSource="{Binding Units}"/>
+        <Entry Text="{Binding Number}"/>
+        <Button Command="{Binding ButtonClicked}"
+                Text="convert"/>
+        <Label Text="{Binding Result}"/>
+    </StackLayout>
+
+</ContentPage>
