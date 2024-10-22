@@ -51,7 +51,6 @@ namespace temperatureConverterMVVM
             }
             else
                 Result = "Podaj liczbe";
-
         }
     }
 
