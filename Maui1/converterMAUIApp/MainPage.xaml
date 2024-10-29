@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:converterMAUIApp.Converters"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="converterMAUIApp.MainPage">
+
+    <ContentPage.Resources>
+        <converters:GradeToTextgradeConverter x:Key="GradeToTextgradeConverter"/>
+        <converters:BooleanToColorConverter x:Key="BooleanToColorConverter"/>
+    </ContentPage.Resources>
+    <ScrollView>
+    <StackLayout>
+        <Label
+            Text="Podaj ocenę"/>
+        <Entry
+            x:Name="grade"
+            Text=""/>
+        <Label
+            Text="{Binding Text , Source={x:Reference grade},Converter={x:StaticResource GradeToTextgradeConverter}}"/>
+
+        <Label Text="zmiana koloru labela"/>
+        <CheckBox x:Name="checkBoxColor"
+                  IsVisible="{Binding IsChecked, Source={x:Reference checkBoxColor}}"/>
+        <Label Text="ten takz ma zmienny kolor"
+               TextColor="{Binding IsChecked, Source={x:Reference checkBoxColor}, Converter={x:StaticResource BooleanToColorConverter}}"/>
+        <toolkit:MediaElement Source="https://vcze201.cda.pl/h/b/b/24/na/jpGlVdSTc8-AiuUE4czr1w/33/1730244996/lq06f84f4a1045de8bf364666ec1f7d85f.mp4" 
+                              ShouldShowPlaybackControls="True"
+                              HeightRequest="600"
+                                WidthRequest="800"
+                              ShouldAutoPlay="True"
+                              />
+        <toolkit:MediaElement Source="C:\Users\Sala213\Pictures\ogr.mp4" 
+                      ShouldShowPlaybackControls="True"
+                      HeightRequest="300"
+                        WidthRequest="400"
+                      ShouldAutoPlay="True"/>
+    </StackLayout>
+    </ScrollView>
+</ContentPage>

@@ -36,7 +36,49 @@ namespace Calculator
             }
             set { numericButtonCommand = value; }
         }
+        private Command operationCommand;
+        public Command OperationCommand
+        {
+            get
+            {
+                if (operationCommand == null)
+                    operationCommand = new Command<string>((string operatorSign) =>
+                    {
+                        if (ifOperationExecute)
+                            return;
 
+                        int firstNumber = prevNumber;
+                        int secondNumber = int.Parse(result);
+                        Result = GetOperatorResult(prevOperatorSign, firstNumber, secondNumber).ToString();
+                        prevOperatorSign = operatorSign;
+                        prevNumber = int.Parse(result);
+                        ifOperationExecute = true;
+                    });
+                return operationCommand;
+            }
+            set { operationCommand = value; }
+        }
+
+        private string prevOperatorSign = "+";
+        private int prevNumber = 0;
+        private bool ifOperationExecute = false;
+        int GetOperatorResult(string operatorSign, int firstNumber, int secondNumber)
+        {
+            int result = operatorSign switch
+            {
+                "+" => firstNumber + secondNumber,
+                "-" => firstNumber - secondNumber,
+                "*" => firstNumber * secondNumber,
+                "/" => firstNumber / secondNumber,
+                _ => 0,
+            };
+            return result;
+        }
+
+        /*
+         Command="{Binding NumberCommand}"
+         CommandParameter="{Binding Text,Source={x:RelativeSource Self}}"
+        **/
         public CalculatorViewModel()
         {
 
