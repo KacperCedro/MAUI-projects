@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "temperatureConverterMVVM", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calculator", "Calculator\Calculator.csproj", "{A9620FF0-3CB1-4265-B0B4-8A26D1899956}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "converterMAUIApp", "converterMAUIApp\converterMAUIApp.csproj", "{2F68B800-BED8-4CD1-B758-58DB363C43E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "converterMAUIApp", "converterMAUIApp\converterMAUIApp.csproj", "{2F68B800-BED8-4CD1-B758-58DB363C43E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caster", "Caster\Caster.csproj", "{1EC3790C-83D5-40D3-98C0-85C726C28125}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +83,12 @@ Global
 		{2F68B800-BED8-4CD1-B758-58DB363C43E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F68B800-BED8-4CD1-B758-58DB363C43E1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2F68B800-BED8-4CD1-B758-58DB363C43E1}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{1EC3790C-83D5-40D3-98C0-85C726C28125}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EC3790C-83D5-40D3-98C0-85C726C28125}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EC3790C-83D5-40D3-98C0-85C726C28125}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{1EC3790C-83D5-40D3-98C0-85C726C28125}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EC3790C-83D5-40D3-98C0-85C726C28125}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EC3790C-83D5-40D3-98C0-85C726C28125}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
