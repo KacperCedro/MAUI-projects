@@ -4,13 +4,53 @@
              x:Class="Egzamin.MainPage"
              xmlns:viewModel="clr-namespace:Egzamin">
     <ContentPage.BindingContext>
-        <viewModel:App =""
+        <viewModel:EgzaminViewModel/>
     </ContentPage.BindingContext>
-    <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
-            
+    <ScrollView >
+        <VerticalStackLayout Background="#F5F5DC"  >
+            <Label Text="Gra w kości. Autor 2137" 
+                   TextColor="White"
+                   BackgroundColor="#A52A2A"
+                   Margin="20 0 20 0"
+                   FontSize="Large"
+                   HorizontalTextAlignment="Center"/>
+            <Button Text="RZUĆ KOŚĆMI"
+                    Command="{Binding ThrowDiceCommand}" 
+                    BackgroundColor="#D2691E"
+                    Margin="20"
+                    HorizontalOptions="Center"/>
+            <HorizontalStackLayout HorizontalOptions="FillAndExpand" 
+                                   BackgroundColor="White" >
+                <Image Source="{Binding PhotoPath1}"
+                       HeightRequest="80"
+                       Margin="0 10 0 10 "/>
+                <Image Source="{Binding PhotoPath2}"
+                       HeightRequest="80"
+                       Margin="0 10 0 0 "/>
+                <Image Source="{Binding PhotoPath3}"
+                       HeightRequest="80"
+                       Margin="0 10 0 0 "/>
+                <Image Source="{Binding PhotoPath4}"
+                       HeightRequest="80"
+                       Margin="0 10 0 0 "/>
+                <Image Source="{Binding PhotoPath5}"
+                       HeightRequest="80"
+                       Margin="0 10 0 0 "/>
+            </HorizontalStackLayout>
+            <Label Text="{Binding FirstScore}"
+                   Margin="20"
+                   TextColor="Black"
+                   HorizontalOptions="Center"/>
+            <Label Text="{Binding SecondScore}"
+                   Margin="20"
+                   TextColor="Black"
+                   HorizontalOptions="Center"/>
+            <Button Text="RESETUJ WYNIK"
+                    Command="{Binding ResetScoreCommand}"
+                    BackgroundColor="#D2691E"
+                    Margin="20"
+                    HorizontalOptions="Center"
+                    />
         </VerticalStackLayout>
     </ScrollView>
 
