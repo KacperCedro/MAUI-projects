@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModel="clr-namespace:QuizzApp"
+             x:Class="QuizzApp.MainPage">
+    <ContentPage.BindingContext>
+        <viewModel:ViewModel/>
+    </ContentPage.BindingContext>
+    
+    <StackLayout>
+        <VerticalStackLayout>
+            <Label Text="Treść Pytania: "/>
+            <Label Text="{Binding CurrentQuestion}"/>
+            
+            <RadioButton Content="{Binding Answare0Content}" IsChecked="{Binding Checked0}"/>
+            <RadioButton Content="{Binding Answare1Content}" IsChecked="{Binding Checked1}"/>
+            <RadioButton Content="{Binding Answare2Content}" IsChecked="{Binding Checked2}"/>
+            <RadioButton Content="{Binding Answare3Content}" IsChecked="{Binding Checked3}"/>
+
+            <HorizontalStackLayout>
+                <Button Text="Poprzednie pytnie" Command="{Binding PrevQuestionCommand}"/>
+                <Button Text="Kolejne pytanie" Command="{Binding NextQuestionCommand}"/>
+                <Button Text="Sprawdź" Command="{Binding CheckCommand}"/>
+                <Button Text="Od nowa" Command="{Binding ResetCommand}"/>
+            </HorizontalStackLayout>
+            <Label Text="{Binding Stats}"/>
+        </VerticalStackLayout>
+    </StackLayout>
+    
+
+</ContentPage>

@@ -21,20 +21,9 @@
 
         <Label Text="zmiana koloru labela"/>
         <CheckBox x:Name="checkBoxColor"
-                  IsVisible="{Binding IsChecked, Source={x:Reference checkBoxColor}}"/>
-        <Label Text="ten takz ma zmienny kolor"
+                  IsChecked="{Binding IsChecked, Source={x:Reference checkBoxColor}}"/>
+            <Label Text="ten takz ma zmienny kolor"
                TextColor="{Binding IsChecked, Source={x:Reference checkBoxColor}, Converter={x:StaticResource BooleanToColorConverter}}"/>
-        <toolkit:MediaElement Source="https://vcze201.cda.pl/h/b/b/24/na/jpGlVdSTc8-AiuUE4czr1w/33/1730244996/lq06f84f4a1045de8bf364666ec1f7d85f.mp4" 
-                              ShouldShowPlaybackControls="True"
-                              HeightRequest="600"
-                                WidthRequest="800"
-                              ShouldAutoPlay="True"
-                              />
-        <toolkit:MediaElement Source="C:\Users\Sala213\Pictures\ogr.mp4" 
-                      ShouldShowPlaybackControls="True"
-                      HeightRequest="300"
-                        WidthRequest="400"
-                      ShouldAutoPlay="True"/>
-    </StackLayout>
+        </StackLayout>
     </ScrollView>
 </ContentPage>
