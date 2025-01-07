@@ -100,13 +100,18 @@ namespace QuizzApp
         public Command NextQuestionCommand { get; set; }
         public Command PrevQuestionCommand { get; set; }
         public Command CheckCommand { get; set; }
-        public Command ResetCommand { get; set; }   
-
+        public Command ResetCommand { get; set; }
 
 
         public ViewModel()
         {
             NextQuestionCommand = new Command(NextQuestion);
+
+            PrevQuestionCommand = new Command(PrevQuestion);
+
+            CheckCommand = new Command(CheckAnswares);
+
+            ResetCommand = new Command(ResetAnsw);
 
             CurrentIndex = 0;
 
@@ -115,27 +120,55 @@ namespace QuizzApp
                 "2+2",
                 "7-1",
                 "4-3",
+                "Co to binging"
             };
             Answares = new List<List<string>>()
             {
                 new List<string>(){"1","2","3","4"},
                 new List<string>(){"1","2","6","8"},
                 new List<string>(){"1","2","3","4"},
+                new List<string>(){"yyyyyyyyy maui","yyyyyyyy","yyyyyy","yyy"}
             };
             CorrectIndex = new List<int>()
             {
-                3,2,0
+                3,2,0,0
             };
             CheckedAnswares = new List<int>() 
             {
-                -1,-1,-1
+                -1,-1,-1,-1
             };
 
             FillData();
         }
 
+        private void ResetAnsw()
+        {
+            for (int i = 0; i < CheckedAnswares.Count; i++)
+            {
+                CheckedAnswares[i] = -1;
+            }
+            FillData();
+        }
+
+        private void CheckAnswares()
+        {
+            InsertUserAnsw(currentIndex);
+            FillData();
+            int points = 0;
+            for (int i = 0; i < CorrectIndex.Count; i++)
+            {
+                if (CheckedAnswares[i] == CorrectIndex[i])
+                {
+                    points++;
+                }
+            }
+            Stats = $"Wynik to {points}/{CorrectIndex.Count}";
+        }
+
         private void NextQuestion()
         {
+            InsertUserAnsw(currentIndex);
+
             if (CurrentIndex < Questions.Count -1)
             {
                 CurrentIndex++;
@@ -143,8 +176,43 @@ namespace QuizzApp
             else
                 CurrentIndex = 0;
             
+
             FillData();
-            Stats = $"bajojajo index to: {currentIndex}";
+        }
+
+        private void PrevQuestion()
+        {
+            InsertUserAnsw(currentIndex);
+
+            if (CurrentIndex > 0)
+            {
+                CurrentIndex--;
+            }
+            else
+                CurrentIndex = Questions.Count - 1;
+            
+
+            FillData();
+        }
+
+        private void InsertUserAnsw(int index)
+        {
+            if (checked0)
+            {
+                CheckedAnswares[index] = 0;
+            }
+            if (checked1)
+            {
+                CheckedAnswares[index] = 1;
+            }
+            if (checked2)
+            {
+                CheckedAnswares[index] = 2;
+            }
+            if (checked3)
+            {
+                CheckedAnswares[index] = 3;
+            }
         }
 
         private void FillData()
@@ -189,6 +257,11 @@ namespace QuizzApp
                     break;
 
                 default:
+                    Checked0 = false;
+                    Checked1 = false;
+                    Checked2 = false;
+                    Checked3 = false;
+
                     break;
             }
 

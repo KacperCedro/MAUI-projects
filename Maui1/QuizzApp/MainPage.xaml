@@ -12,10 +12,10 @@
             <Label Text="Treść Pytania: "/>
             <Label Text="{Binding CurrentQuestion}"/>
             
-            <RadioButton Content="{Binding Answare0Content}" IsChecked="{Binding Checked0}"/>
-            <RadioButton Content="{Binding Answare1Content}" IsChecked="{Binding Checked1}"/>
-            <RadioButton Content="{Binding Answare2Content}" IsChecked="{Binding Checked2}"/>
-            <RadioButton Content="{Binding Answare3Content}" IsChecked="{Binding Checked3}"/>
+            <RadioButton Content="{Binding Answare0Content}" IsChecked="{Binding Checked0}" />
+            <RadioButton Content="{Binding Answare1Content}" IsChecked="{Binding Checked1}" />
+            <RadioButton Content="{Binding Answare2Content}" IsChecked="{Binding Checked2}" />
+            <RadioButton Content="{Binding Answare3Content}" IsChecked="{Binding Checked3}" />
 
             <HorizontalStackLayout>
                 <Button Text="Poprzednie pytnie" Command="{Binding PrevQuestionCommand}"/>
