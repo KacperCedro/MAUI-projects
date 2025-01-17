@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ViewModel="clr-namespace:QuizApp2"
+             x:Class="QuizApp2.MainPage">
+
+    <ContentPage.BindingContext>
+        <ViewModel:QuizViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ScrollView>
+        <VerticalStackLayout>
+            <Label Text="Quiz" />
+            <VerticalStackLayout>
+                <Label /> <!-- Title -->
+                <Label Text="{Binding CurrentQuestionIndex}"/> <!-- Current question id -->
+                <Label Text="{Binding CurrentQuestion.QuestionContent}"/> <!-- Current question -->
+                <ListView ItemsSource="{Binding CurrentQuestion.Answears}"> <!-- List of answears -->
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <HorizontalStackLayout>
+                                    <CheckBox IsChecked="{Binding IsChecked}"/>
+                                    <Label Text="{Binding AnswearContent}"/>
+                                </HorizontalStackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView> 
+                <HorizontalStackLayout> <!-- quiz menu -->
+                    <Button Text="poprzednie" Command="{Binding PreviousQuestionCommand}"/> <!-- previous question -->
+                    <Button Text="następne" Command="{Binding NextQuestionCommand}"/> <!-- next question -->
+                    <Button Text="sprawdź" Command="{Binding CheckQuestionsCommand}"/> <!-- check answears -->
+                    <Button Text="wyczyść" Command="{Binding ClearQuestionsCommand}"/> <!-- clear all -->
+                </HorizontalStackLayout>
+                <Label Text="{Binding Result}"/> <!-- final result -->
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
