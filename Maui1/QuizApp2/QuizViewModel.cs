@@ -181,7 +181,7 @@ namespace QuizApp2
                 }
             }
 
-            currentQuestion = Questions[currentQuestionIndex];
+            CurrentQuestion = Questions[currentQuestionIndex];
             Points = 0;
             Result = string.Empty;
         }

@@ -8,7 +8,7 @@
     Title="QuizApp2">
 
     <ShellContent
-        Title="Home"
+        Title="Quiz"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 

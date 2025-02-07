@@ -10,30 +10,29 @@
     
     <ScrollView>
         <VerticalStackLayout>
-            <Label Text="Quiz" />
             <VerticalStackLayout>
-                <Label /> <!-- Title -->
-                <Label Text="{Binding CurrentQuestionIndex}"/> <!-- Current question id -->
-                <Label Text="{Binding CurrentQuestion.QuestionContent}"/> <!-- Current question -->
+                <Label Text="{Binding CurrentQuestionIndex, StringFormat='Question id: {}'}" TextColor="#9880E5" FontSize="Large" HorizontalTextAlignment="Center"/> <!-- Current question id -->
+                <Label Text="{Binding CurrentQuestion.QuestionContent}" FontSize="Medium" HorizontalTextAlignment="Center" TextColor="#9880E5" FontAttributes="Bold"/> <!-- Current question -->
                 <ListView ItemsSource="{Binding CurrentQuestion.Answears}"> <!-- List of answears -->
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <HorizontalStackLayout>
-                                    <CheckBox IsChecked="{Binding IsChecked}"/>
-                                    <Label Text="{Binding AnswearContent}"/>
+                                <HorizontalStackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                                    <CheckBox IsChecked="{Binding IsChecked}" Color="#9880E5" />
+                                    <Label Text="{Binding AnswearContent}" FontSize="Micro" FontAttributes="Bold" TextColor="#9880E5"/>
                                 </HorizontalStackLayout>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView> 
-                <HorizontalStackLayout> <!-- quiz menu -->
-                    <Button Text="poprzednie" Command="{Binding PreviousQuestionCommand}"/> <!-- previous question -->
-                    <Button Text="następne" Command="{Binding NextQuestionCommand}"/> <!-- next question -->
-                    <Button Text="sprawdź" Command="{Binding CheckQuestionsCommand}"/> <!-- check answears -->
-                    <Button Text="wyczyść" Command="{Binding ClearQuestionsCommand}"/> <!-- clear all -->
+                <HorizontalStackLayout HorizontalOptions="CenterAndExpand" > <!-- quiz menu -->
+                    <Button Text="poprzednie" Command="{Binding PreviousQuestionCommand}" Margin="2"/> <!-- previous question -->
+                    <Button Text="następne" Command="{Binding NextQuestionCommand}" Margin="2"/> <!-- next question -->
+                    <Button Text="sprawdź" Command="{Binding CheckQuestionsCommand}" Margin="2"/> <!-- check answears -->
+                    <Button Text="wyczyść" Command="{Binding ClearQuestionsCommand}" Margin="2"/> <!-- clear all -->
                 </HorizontalStackLayout>
-                <Label Text="{Binding Result}"/> <!-- final result -->
+                <Label Text="{Binding Result}"  FontSize="Medium" HorizontalTextAlignment="Center" TextColor="#9880E5" FontAttributes="Bold"/>
+                <!-- final result -->
             </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>

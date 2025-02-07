@@ -9,7 +9,14 @@ namespace QuizApp2
     internal class Answear:BindableObject
     {
         public string AnswearContent { get; set; }
-        public bool IsChecked { get; set; }
+        private bool isChecked;
+
+        public bool IsChecked
+        {
+            get { return isChecked; }
+            set { isChecked = value; OnPropertyChanged(); }
+        }
+
         public bool IsCorrect { get; set; }
         public Answear()
         {
