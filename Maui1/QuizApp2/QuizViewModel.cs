@@ -152,33 +152,16 @@ namespace QuizApp2
             Points = 0;
             foreach (var question in Questions)
             {
-                bool tmpIsCorrect = false;
+                List<bool> checkedIdList = new List<bool>();
+                List<bool> correctIdList = new List<bool>();
                 foreach (var answear in question.Answears)
                 {
-                    if (answear.IsChecked)
-                    {
-                        if (answear.IsCorrect)
-                        {
-                            if (tmpIsCorrect)
-                            {
-                                tmpIsCorrect = true;
-                            }
-                            else
-                            {
-                                tmpIsCorrect = true;
-                            }
-                        }
-                        else
-                        {
-                            tmpIsCorrect = false; 
-                            break;
-                        }
-                    }
-                    if (tmpIsCorrect)
-                    {
-                        Points++;
-                    }
-
+                    checkedIdList.Add(answear.IsChecked);
+                    correctIdList.Add(answear.IsCorrect);
+                }
+                if (correctIdList.SequenceEqual(checkedIdList))
+                {
+                    Points++;
                 }
             }
         }
@@ -197,6 +180,10 @@ namespace QuizApp2
                     answear.IsChecked = false;
                 }
             }
+
+            currentQuestion = Questions[currentQuestionIndex];
+            Points = 0;
+            Result = string.Empty;
         }
     }
 }
