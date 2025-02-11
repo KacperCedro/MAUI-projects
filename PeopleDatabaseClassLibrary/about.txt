@@ -1,0 +1,6 @@
+﻿1. tworzymy class library
+2. kasujemy plik class1.cs 
+3. instalacja bibliotek: 
+	<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.12" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.12" />
+
