@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PeopleDatabaseMauiApp.MainPage"
+             xmlns:viewModel="clr-namespace:PeopleDatabaseMauiApp">
+    
+    <ContentPage.BindingContext>
+        <viewModel:MainPageViewModel/>
+    </ContentPage.BindingContext>
+    
+    <StackLayout>
+        <Label Text="CREATE"
+               FontSize="20"/>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Podaj imie:"
+                   VerticalOptions="Center"/>
+            <Entry HorizontalOptions="FillAndExpand"
+                   Text="{Binding Name}"/>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Podaj nazwisko:"
+                   VerticalOptions="Center"/>
+            <Entry HorizontalOptions="FillAndExpand"
+                   Text="{Binding Surname}"/>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Podaj wiek:"
+                   VerticalOptions="Center"/>
+            <Entry HorizontalOptions="FillAndExpand"
+                   Text="{Binding Age}"/>
+        </StackLayout>
+        <Button Text="Dodaj osobę"
+                HorizontalOptions="Center"
+                Command="{Binding AddPersonCommand}"/>
+
+        <Label Text="READ"
+               FontSize="20"/>
+        <CollectionView ItemsSource="{Binding People}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{Binding Name}"
+                               Margin="0,0,10,0"/>
+                        <Label Text="{Binding Surname}"
+                               Margin="0,0,10,0"/>
+                        <Label Text="{Binding Age}"
+                               Margin="0,0,10,0"/>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Button Text="Odświerz" Command="{Binding ReadPeopleCommand}"/>
+
+
+    </StackLayout>
+    
+</ContentPage>
