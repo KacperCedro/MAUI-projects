@@ -35,7 +35,9 @@
 
         <Label Text="READ"
                FontSize="20"/>
-        <CollectionView ItemsSource="{Binding People}">
+        <CollectionView ItemsSource="{Binding People}"
+                        SelectionMode="Single"
+                        SelectedItem="{Binding CurrentSelectionPerson}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout Orientation="Horizontal">
@@ -50,6 +52,19 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
         <Button Text="Odświerz" Command="{Binding ReadPeopleCommand}"/>
+
+        <Label Text="UPDATE"
+               FontSize="20"/>
+
+        <Label Text="Imię"/>
+        <Entry Text="{Binding CurrentSelectionPerson.Name}"/>
+        <Label Text="Nazwisko"/>
+        <Entry Text="{Binding CurrentSelectionPerson.Surname}"/>
+        <Label Text="Wiek"/>
+        <Entry Text="{Binding CurrentSelectionPerson.Age}"/>
+        <Button Text="Update"
+                HorizontalOptions="Center"
+                Command="{Binding UpdatePersonCommand}"/>
 
 
     </StackLayout>

@@ -1,4 +1,5 @@
-﻿using PeopleDatabaseClassLibrary.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using PeopleDatabaseClassLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,12 +40,40 @@ namespace PeopleDatabaseClassLibrary
 
             return dbContext
                 .People
+                .AsNoTracking()
                 .Where(p => p.Age >= 18)
                 .OrderBy(p => p.Surname)
                 .ThenByDescending(p => p.Name)
                 //.Select(p => p)
                 .ToList();
 
+        }
+
+        public void UpdatePerson(int id, string name, string surname, int age)
+        {
+            /*
+             update people
+                set name = nameNET,
+                    surname = surnameNET
+                    age = ageNET
+              where id = idNET
+             */
+
+
+            /*
+                select *
+                  from people
+                 where id = idNET
+             */ 
+            //Person personToUpdate = dbContext.People.Where(p=> p.Id == id).FirstOrDefault();
+            Person? personToUpdate = dbContext.People.FirstOrDefault(p=> p.Id == id);
+            if (personToUpdate != null)
+            {
+                personToUpdate.Name = name;
+                personToUpdate.Surname = surname;
+                personToUpdate.Age = age;
+                dbContext.SaveChanges();
+            }
         }
     }
 }

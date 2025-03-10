@@ -11,6 +11,7 @@ namespace PeopleDatabaseMauiApp
 {
     internal class MainPageViewModel : BindableObject
     {
+        //CREATE
         public string Name { get; set; }
         public string Surname { get; set; }
         public int Age { get; set; }
@@ -29,6 +30,7 @@ namespace PeopleDatabaseMauiApp
             }
         }
 
+        //READ
         public ObservableCollection<Person> People { get; set; }
 
         private Command readPeopleCommand;
@@ -45,6 +47,32 @@ namespace PeopleDatabaseMauiApp
                             People.Add(person);
                     });
                 return readPeopleCommand;
+            }
+        }
+
+
+        //UPDATE
+        private Person currentSelectionPerson;
+        public Person CurrentSelectionPerson
+        {
+            get { return currentSelectionPerson; }
+            set { currentSelectionPerson = value; OnPropertyChanged(); }
+        }
+
+        private Command updatePersonCommand;
+        public Command UpdatePersonCommand
+        {
+            get
+            {
+                if (updatePersonCommand == null)
+                    updatePersonCommand = new Command(() =>
+                    {
+                        peopleRepository.UpdatePerson(currentSelectionPerson.Id,
+                            currentSelectionPerson.Name,
+                            currentSelectionPerson.Surname,
+                            currentSelectionPerson.Age);
+                    });
+                return updatePersonCommand;
             }
         }
 
