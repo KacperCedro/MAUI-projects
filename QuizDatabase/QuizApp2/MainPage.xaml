@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ViewModel="clr-namespace:QuizApp2"
+             x:Class="QuizApp2.MainPage">
+
+    <ContentPage.BindingContext>
+        <ViewModel:QuizViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ScrollView>
+        <VerticalStackLayout>
+            <VerticalStackLayout>
+                <Label Text="{Binding CurrentQuestionIndex, StringFormat='Question id: {}'}" TextColor="#9880E5" FontSize="Large" HorizontalTextAlignment="Center"/> <!-- Current question id -->
+                <Label Text="{Binding CurrentQuestion.QuestionContent}" FontSize="Medium" HorizontalTextAlignment="Center" TextColor="#9880E5" FontAttributes="Bold"/> <!-- Current question -->
+                <ListView ItemsSource="{Binding CurrentQuestion.Answears}"> <!-- List of answears -->
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <HorizontalStackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                                    <CheckBox IsChecked="{Binding IsChecked}" Color="#9880E5" />
+                                    <Label Text="{Binding AnswearContent}" FontSize="Micro" FontAttributes="Bold" TextColor="#9880E5"/>
+                                </HorizontalStackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView> 
+                <HorizontalStackLayout HorizontalOptions="CenterAndExpand" > <!-- quiz menu -->
+                    <Button Text="poprzednie" Command="{Binding PreviousQuestionCommand}" Margin="2"/> <!-- previous question -->
+                    <Button Text="następne" Command="{Binding NextQuestionCommand}" Margin="2"/> <!-- next question -->
+                    <Button Text="sprawdź" Command="{Binding CheckQuestionsCommand}" Margin="2"/> <!-- check answears -->
+                    <Button Text="wyczyść" Command="{Binding ClearQuestionsCommand}" Margin="2"/> <!-- clear all -->
+                </HorizontalStackLayout>
+                <Label Text="{Binding Result}"  FontSize="Medium" HorizontalTextAlignment="Center" TextColor="#9880E5" FontAttributes="Bold"/>
+                <!-- final result -->
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
