@@ -76,6 +76,25 @@ namespace PeopleDatabaseMauiApp
             }
         }
 
+        private Command deletePersonCommand;
+        public Command DeletePersonCommand
+        {
+            get
+            {
+                if (deletePersonCommand == null)
+                    deletePersonCommand = new Command(() =>
+                    {
+                        if (CurrentSelectionPerson != null)
+                        {
+                            peopleRepository.DeletePerson(CurrentSelectionPerson.Id);
+                            People.Remove(CurrentSelectionPerson);
+                        }
+                        
+                    });
+                return deletePersonCommand;
+            }
+        }
+
         private PeopleRepository peopleRepository;
         public MainPageViewModel()
         {

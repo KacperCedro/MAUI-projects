@@ -12,4 +12,8 @@ public partial class Person
     public string Surname { get; set; } = null!;
 
     public int Age { get; set; }
+
+    public int AddressId { get; set; }
+
+    public virtual Address Address { get; set; } = null!;
 }
