@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QuizApp2
 {
-    internal class Answear:BindableObject
+    internal class QuizAnswear:BindableObject
     {
         public string AnswearContent { get; set; }
         private bool isChecked;
@@ -18,7 +18,7 @@ namespace QuizApp2
         }
 
         public bool IsCorrect { get; set; }
-        public Answear()
+        public QuizAnswear()
         {
             
         }

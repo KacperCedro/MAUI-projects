@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using QuizDatabaseClassLibrary;
 
 namespace QuizApp2
 {
@@ -28,9 +29,9 @@ namespace QuizApp2
         }
 
 
-        private Question currentQuestion;
+        private QuizQuestion currentQuestion;
 
-        public Question CurrentQuestion
+        public QuizQuestion CurrentQuestion
         {
             get { return currentQuestion; }
             set {
@@ -39,9 +40,9 @@ namespace QuizApp2
             }
         }
 
-        private List<Question> questions;
+        private List<QuizQuestion> questions;
 
-        public List<Question> Questions
+        public List<QuizQuestion> Questions
         {
             get { return questions; }
             set { questions = value; }
@@ -52,8 +53,13 @@ namespace QuizApp2
         public Command CheckQuestionsCommand { get; set; }
         public Command ClearQuestionsCommand { get; set; }
 
+        public QuizDBContext dbContext { get; set; }
+
         public QuizViewModel()
         {
+
+            dbContext = new QuizDBContext();
+
             Points = 0;
 
             NextQuestionCommand = new Command(NextQuestion);
@@ -63,26 +69,28 @@ namespace QuizApp2
 
             CurrentQuestionIndex = 0;
 
-            Questions = new List<Question>() 
+            /*
+
+            Questions = new List<QuizQuestion>() 
             {
-                new Question()
+                new QuizQuestion()
                 {
                     QuestionContent = "Temperatura wrzenia wody",
-                    Answears = new List<Answear>()
+                    Answears = new List<QuizAnswear>()
                     {
-                        new Answear()
+                        new QuizAnswear()
                         {
                             AnswearContent = "100F",
                             IsChecked = false,
                             IsCorrect = false,
                         },
-                        new Answear()
+                        new QuizAnswear()
                         {
                             AnswearContent = "100K",
                             IsChecked = false,
                             IsCorrect = false,
                         },
-                        new Answear()
+                        new QuizAnswear()
                         {
                             AnswearContent = "100C",
                             IsChecked = false,
@@ -90,24 +98,24 @@ namespace QuizApp2
                         }
                     }
                 },
-                new Question()
+                new QuizQuestion()
                 {
                     QuestionContent = "Temperatura zamarzania wody",
-                    Answears = new List<Answear>()
+                    Answears = new List<QuizAnswear>()
                     {
-                        new Answear()
+                        new QuizAnswear()
                         {
                             AnswearContent = "0F",
                             IsChecked = false,
                             IsCorrect = false,
                         },
-                        new Answear()
+                        new QuizAnswear()
                         {
                             AnswearContent = "0C",
                             IsChecked = false,
                             IsCorrect = true,
                         },
-                        new Answear()
+                        new QuizAnswear()
                         {
                             AnswearContent = "0K",
                             IsChecked = false,
@@ -116,6 +124,10 @@ namespace QuizApp2
                     }
                 },
             };
+            */
+
+            Questions = new List<QuizQuestion>();
+
 
             CurrentQuestion = Questions[CurrentQuestionIndex];
         }
