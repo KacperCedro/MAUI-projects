@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using QuizDatabaseClassLibrary;
 
 namespace QuizApp2
@@ -69,6 +70,8 @@ namespace QuizApp2
 
             CurrentQuestionIndex = 0;
 
+
+
             /*
 
             Questions = new List<QuizQuestion>() 
@@ -126,7 +129,15 @@ namespace QuizApp2
             };
             */
 
-            Questions = new List<QuizQuestion>();
+            Questions = dbContext.Questions.Include(q => q.Answers).Select(q => new QuizQuestion
+            {
+                QuestionContent = q.Content,
+                Answears = q.Answers.Select(a => new QuizAnswear
+                {
+                    AnswearContent = a.AnswerContent,
+                    IsCorrect = a.IsCorrect
+                }).ToList()
+            }).ToList();    
 
 
             CurrentQuestion = Questions[CurrentQuestionIndex];
