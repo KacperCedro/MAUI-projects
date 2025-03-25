@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using QuizDatabaseClassLibrary;
+using QuizDatabaseClassLibrary.Models;
 
 namespace QuizApp2
 {
@@ -68,7 +69,7 @@ namespace QuizApp2
             CheckQuestionsCommand = new Command(ShowResult);
             ClearQuestionsCommand = new Command(ClearAnswears);
 
-            CurrentQuestionIndex = 0;
+            CurrentQuestionIndex = 1;
 
 
 
@@ -128,43 +129,69 @@ namespace QuizApp2
                 },
             };
             */
-
-            Questions = dbContext.Questions.Include(q => q.Answers).Select(q => new QuizQuestion
+            
+            /*
+            Questions = dbContext.Questions
+                .Include(q => q.Answers)
+                .Select(q => new QuizQuestion
             {
                 QuestionContent = q.Content,
                 Answears = q.Answers.Select(a => new QuizAnswear
                 {
                     AnswearContent = a.AnswerContent,
-                    IsCorrect = a.IsCorrect
+                    IsCorrect = a.IsCorrect,
+                    IsChecked = false
                 }).ToList()
-            }).ToList();    
+            }).ToList();  
+            */
 
 
-            CurrentQuestion = Questions[CurrentQuestionIndex];
+            //CurrentQuestion = Questions[CurrentQuestionIndex];
+            CurrentQuestion = GetCurrentQuestion();
+        }
+        private QuizQuestion GetCurrentQuestion()
+        {
+            Question? question = dbContext.Questions
+                .Include(q => q.Answers)
+                .FirstOrDefault(q => q.Id == CurrentQuestionIndex);
+            QuizQuestion quizQuestion = new QuizQuestion()
+            {
+                QuestionContent = question.Content,
+                Answears = question.Answers.Select(a => new QuizAnswear()
+                {
+                    AnswearContent = a.AnswerContent,
+                    IsCorrect = a.IsCorrect,
+                    IsChecked = false
+                }).ToList(),
+            };
+
+            return quizQuestion;
         }
         private void NextQuestion()
         {
-            if (CurrentQuestionIndex == Questions.Count - 1)
+            if (CurrentQuestionIndex == dbContext.Questions.Count() )
             {
-                CurrentQuestionIndex = 0;
+                CurrentQuestionIndex = 1;
             }
             else
             {
                 CurrentQuestionIndex++;
             }
-            CurrentQuestion = Questions[CurrentQuestionIndex];
+            //CurrentQuestion = Questions[CurrentQuestionIndex];
+            CurrentQuestion = GetCurrentQuestion();
         }
         private void PreviousQuestion()
         {
-            if (CurrentQuestionIndex == 0)
+            if (CurrentQuestionIndex == 1)
             {
-                CurrentQuestionIndex = Questions.Count - 1;
+                CurrentQuestionIndex = dbContext.Questions.Count();
             }
             else
             {
                 CurrentQuestionIndex--;
             }
-            CurrentQuestion = Questions[currentQuestionIndex];
+            //CurrentQuestion = Questions[currentQuestionIndex];
+            CurrentQuestion = GetCurrentQuestion();
         }
         private void SetResult()
         {
@@ -204,7 +231,8 @@ namespace QuizApp2
                 }
             }
 
-            CurrentQuestion = Questions[currentQuestionIndex];
+            //CurrentQuestion = Questions[currentQuestionIndex];
+            CurrentQuestion = GetCurrentQuestion();
             Points = 0;
             Result = string.Empty;
         }

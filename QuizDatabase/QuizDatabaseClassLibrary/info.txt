@@ -18,3 +18,42 @@ Przejdź do:
 HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem
 
 Znajdź wartość LongPathsEnabled i ustaw ją na 1.
+
+
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table answers {
+  Id integer [primary key]
+  answerContent varchar
+  isCorrect bool
+  questionId integer
+}
+
+Table users {
+  Id integer [primary key]
+  username varchar
+  password varchar
+}
+
+Table questions {
+  Id integer [primary key]
+  content varchar
+}
+
+Table answersUsers {
+  Id int [primary key]
+  answerId int
+  userId int
+}
+
+Ref: answers.questionId > questions.Id // many-to-one
+
+Ref: answersUsers.answerId < answers.Id
+
+Ref: answersUsers.userId < users.Id
+/*
+Ref: users.id < follows.following_user_id
+
+Ref: users.id < follows.followed_user_id
+*/
