@@ -56,6 +56,7 @@ namespace QuizApp2
         public Command ClearQuestionsCommand { get; set; }
 
         public QuizDBContext dbContext { get; set; }
+        public List<Points> PointList { get; set; }
 
         public QuizViewModel()
         {
@@ -68,8 +69,9 @@ namespace QuizApp2
             PreviousQuestionCommand = new Command(PreviousQuestion);
             CheckQuestionsCommand = new Command(ShowResult);
             ClearQuestionsCommand = new Command(ClearAnswears);
+            PointList = InitPointList();
 
-            CurrentQuestionIndex = 1;
+            CurrentQuestionIndex = 0;
 
 
 
@@ -149,11 +151,35 @@ namespace QuizApp2
             //CurrentQuestion = Questions[CurrentQuestionIndex];
             CurrentQuestion = GetCurrentQuestion();
         }
+        private List<Points> InitPointList()
+        {
+            List<Points> pointsList = new List<Points>();
+
+            pointsList = dbContext.Questions.Select(q => new Points
+            {
+                Id = q.Id,
+                CheckedAnswers = EnterDefaultValues(q)
+
+            }).ToList();
+
+            return pointsList;
+        }
+        private static List<bool> EnterDefaultValues(Question q)
+        { 
+            List<bool> result = new List<bool>();
+
+            for (int i = 0; i < q.Answers.Count - 1; i++)
+            {
+                result.Add(false);
+            }
+
+            return result;
+        }
         private QuizQuestion GetCurrentQuestion()
         {
             Question? question = dbContext.Questions
                 .Include(q => q.Answers)
-                .FirstOrDefault(q => q.Id == CurrentQuestionIndex);
+                .FirstOrDefault(q => q.Id == PointList[currentQuestionIndex].Id);
             QuizQuestion quizQuestion = new QuizQuestion()
             {
                 QuestionContent = question.Content,
@@ -165,13 +191,20 @@ namespace QuizApp2
                 }).ToList(),
             };
 
+            for (int i = 0; i < quizQuestion.Answears.Count ; i++)
+            {
+                quizQuestion.Answears[i].IsChecked = PointList[CurrentQuestionIndex].CheckedAnswers[i];
+            }
+
             return quizQuestion;
         }
         private void NextQuestion()
         {
-            if (CurrentQuestionIndex == dbContext.Questions.Count() )
+
+            UpdatePointList();
+            if (CurrentQuestionIndex == PointList.Count -1 )
             {
-                CurrentQuestionIndex = 1;
+                CurrentQuestionIndex = 0;
             }
             else
             {
@@ -182,9 +215,11 @@ namespace QuizApp2
         }
         private void PreviousQuestion()
         {
-            if (CurrentQuestionIndex == 1)
+
+            UpdatePointList();
+            if (CurrentQuestionIndex == 0)
             {
-                CurrentQuestionIndex = dbContext.Questions.Count();
+                CurrentQuestionIndex = PointList.Count - 1;
             }
             else
             {
@@ -193,10 +228,18 @@ namespace QuizApp2
             //CurrentQuestion = Questions[currentQuestionIndex];
             CurrentQuestion = GetCurrentQuestion();
         }
+        private void UpdatePointList()
+        {
+            for (int i = 0; i < currentQuestion.Answears.Count -1; i++)
+            {
+                PointList[currentQuestionIndex].CheckedAnswers[i] = currentQuestion.Answears[i].IsChecked;
+            }
+        }
         private void SetResult()
         {
             Result = $"Wynik to {Points} / {Questions.Count} punktów, czyli {(float)(((float)Points/(float)Questions.Count) * 100.0)}%.";
         }
+        /*
         private void CountPoints()
         {
             Points = 0;
@@ -215,12 +258,33 @@ namespace QuizApp2
                 }
             }
         }
+        */
+        private void CountPoints()
+        {
+        }
         private void ShowResult()
         {
             Points = 0;
             CountPoints();
             SetResult();
         }
+        private void ClearAnswears()
+        {
+
+            for (int i = 0; i < PointList.Count; i++)
+            {
+                for (int j = 0; j < PointList[i].CheckedAnswers.Count; j++)
+                {
+                    PointList[i].CheckedAnswers[j] = false;
+                }
+            }
+
+            //CurrentQuestion = Questions[currentQuestionIndex];
+            CurrentQuestion = GetCurrentQuestion();
+            Points = 0;
+            Result = string.Empty;
+        }
+        /*
         private void ClearAnswears()
         {
             foreach (var question in Questions)
@@ -236,5 +300,12 @@ namespace QuizApp2
             Points = 0;
             Result = string.Empty;
         }
+        */
+    }
+        
+    public class Points
+    {
+        public int Id { get; set; }
+        public List<bool> CheckedAnswers { get; set; }
     }
 }
