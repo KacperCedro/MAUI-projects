@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+//using GoogleGson;
 using Microsoft.EntityFrameworkCore;
 using QuizDatabaseClassLibrary;
 using QuizDatabaseClassLibrary.Models;
@@ -56,11 +57,10 @@ namespace QuizApp2
         public Command ClearQuestionsCommand { get; set; }
 
         public QuizDBContext dbContext { get; set; }
-        public List<Points> PointList { get; set; }
-
+        public List<int> IdList { get; set; }
+        
         public QuizViewModel()
         {
-
             dbContext = new QuizDBContext();
 
             Points = 0;
@@ -69,117 +69,19 @@ namespace QuizApp2
             PreviousQuestionCommand = new Command(PreviousQuestion);
             CheckQuestionsCommand = new Command(ShowResult);
             ClearQuestionsCommand = new Command(ClearAnswears);
-            PointList = InitPointList();
-
-            CurrentQuestionIndex = 0;
-
-
-
-            /*
-
-            Questions = new List<QuizQuestion>() 
-            {
-                new QuizQuestion()
-                {
-                    QuestionContent = "Temperatura wrzenia wody",
-                    Answears = new List<QuizAnswear>()
-                    {
-                        new QuizAnswear()
-                        {
-                            AnswearContent = "100F",
-                            IsChecked = false,
-                            IsCorrect = false,
-                        },
-                        new QuizAnswear()
-                        {
-                            AnswearContent = "100K",
-                            IsChecked = false,
-                            IsCorrect = false,
-                        },
-                        new QuizAnswear()
-                        {
-                            AnswearContent = "100C",
-                            IsChecked = false,
-                            IsCorrect = true,
-                        }
-                    }
-                },
-                new QuizQuestion()
-                {
-                    QuestionContent = "Temperatura zamarzania wody",
-                    Answears = new List<QuizAnswear>()
-                    {
-                        new QuizAnswear()
-                        {
-                            AnswearContent = "0F",
-                            IsChecked = false,
-                            IsCorrect = false,
-                        },
-                        new QuizAnswear()
-                        {
-                            AnswearContent = "0C",
-                            IsChecked = false,
-                            IsCorrect = true,
-                        },
-                        new QuizAnswear()
-                        {
-                            AnswearContent = "0K",
-                            IsChecked = false,
-                            IsCorrect = false,
-                        }
-                    }
-                },
-            };
-            */
             
-            /*
-            Questions = dbContext.Questions
-                .Include(q => q.Answers)
-                .Select(q => new QuizQuestion
-            {
-                QuestionContent = q.Content,
-                Answears = q.Answers.Select(a => new QuizAnswear
-                {
-                    AnswearContent = a.AnswerContent,
-                    IsCorrect = a.IsCorrect,
-                    IsChecked = false
-                }).ToList()
-            }).ToList();  
-            */
 
+            CurrentQuestionIndex = 1;
 
             //CurrentQuestion = Questions[CurrentQuestionIndex];
             CurrentQuestion = GetCurrentQuestion();
         }
-        private List<Points> InitPointList()
-        {
-            List<Points> pointsList = new List<Points>();
-
-            pointsList = dbContext.Questions.Select(q => new Points
-            {
-                Id = q.Id,
-                CheckedAnswers = EnterDefaultValues(q)
-
-            }).ToList();
-
-            return pointsList;
-        }
-        private static List<bool> EnterDefaultValues(Question q)
-        { 
-            List<bool> result = new List<bool>();
-
-            for (int i = 0; i < q.Answers.Count - 1; i++)
-            {
-                result.Add(false);
-            }
-
-            return result;
-        }
+        
         private QuizQuestion GetCurrentQuestion()
         {
-            Question? question = dbContext.Questions
+            Question question = dbContext.Questions
                 .Include(q => q.Answers)
-                .FirstOrDefault(q => q.Id == PointList[currentQuestionIndex].Id);
+                .FirstOrDefault(q => q.Id == currentQuestionIndex);
             QuizQuestion quizQuestion = new QuizQuestion()
             {
                 QuestionContent = question.Content,
@@ -187,57 +89,46 @@ namespace QuizApp2
                 {
                     AnswearContent = a.AnswerContent,
                     IsCorrect = a.IsCorrect,
-                    IsChecked = false
+                    IsChecked = a.IsChecked
                 }).ToList(),
             };
 
-            for (int i = 0; i < quizQuestion.Answears.Count ; i++)
-            {
-                quizQuestion.Answears[i].IsChecked = PointList[CurrentQuestionIndex].CheckedAnswers[i];
-            }
 
             return quizQuestion;
         }
         private void NextQuestion()
         {
-
-            UpdatePointList();
-            if (CurrentQuestionIndex == PointList.Count -1 )
+            SaveCheckedAnswers();
+            if (CurrentQuestionIndex == dbContext.Questions.Count())
             {
-                CurrentQuestionIndex = 0;
+                CurrentQuestionIndex = 1;
             }
             else
             {
                 CurrentQuestionIndex++;
             }
             //CurrentQuestion = Questions[CurrentQuestionIndex];
+            
             CurrentQuestion = GetCurrentQuestion();
         }
         private void PreviousQuestion()
         {
-
-            UpdatePointList();
-            if (CurrentQuestionIndex == 0)
+            SaveCheckedAnswers();
+            if (CurrentQuestionIndex == 1)
             {
-                CurrentQuestionIndex = PointList.Count - 1;
+                CurrentQuestionIndex = dbContext.Questions.Count();
             }
             else
             {
                 CurrentQuestionIndex--;
             }
             //CurrentQuestion = Questions[currentQuestionIndex];
+            
             CurrentQuestion = GetCurrentQuestion();
-        }
-        private void UpdatePointList()
-        {
-            for (int i = 0; i < currentQuestion.Answears.Count -1; i++)
-            {
-                PointList[currentQuestionIndex].CheckedAnswers[i] = currentQuestion.Answears[i].IsChecked;
-            }
         }
         private void SetResult()
         {
-            Result = $"Wynik to {Points} / {Questions.Count} punktów, czyli {(float)(((float)Points/(float)Questions.Count) * 100.0)}%.";
+            Result = $"Wynik to {Points} / {dbContext.Questions.Count()} punktów, czyli {(float)(((float)Points/(float)dbContext.Questions.Count()) * 100.0)}%.";
         }
         /*
         private void CountPoints()
@@ -261,51 +152,65 @@ namespace QuizApp2
         */
         private void CountPoints()
         {
+            Points = 0;
+
+            foreach (var question in dbContext.Questions)
+            {
+                List<bool> checkedIdList = new List<bool>();
+                List<bool> correctIdList = new List<bool>();
+                foreach (var answer in question.Answers)
+                {
+                    checkedIdList.Add(answer.IsChecked);
+                    correctIdList.Add(answer.IsCorrect);
+                }
+                if (correctIdList.SequenceEqual(checkedIdList))
+                {
+                    Points++;
+                }
+            }
+
         }
         private void ShowResult()
         {
+            SaveCheckedAnswers();
             Points = 0;
             CountPoints();
             SetResult();
         }
         private void ClearAnswears()
         {
-
-            for (int i = 0; i < PointList.Count; i++)
+            foreach (var item in dbContext.Questions)
             {
-                for (int j = 0; j < PointList[i].CheckedAnswers.Count; j++)
+                foreach (var index in item.Answers)
                 {
-                    PointList[i].CheckedAnswers[j] = false;
+                    index.IsChecked = false;
                 }
             }
+            dbContext.SaveChanges();
 
             //CurrentQuestion = Questions[currentQuestionIndex];
             CurrentQuestion = GetCurrentQuestion();
             Points = 0;
             Result = string.Empty;
-        }
-        /*
-        private void ClearAnswears()
+        } 
+        private void SaveCheckedAnswers()
         {
-            foreach (var question in Questions)
+            var newList = dbContext.Questions
+                .Include(x => x.Answers)
+                .FirstOrDefault(q => q.Id == currentQuestionIndex)
+                .Answers.ToList();
+
+            int counter = 0;
+            foreach (var item in newList)
             {
-                foreach (var answear in question.Answears)
-                {
-                    answear.IsChecked = false;
-                }
+                item.IsChecked = currentQuestion.Answears[counter].IsChecked;
+                counter++;
             }
 
-            //CurrentQuestion = Questions[currentQuestionIndex];
-            CurrentQuestion = GetCurrentQuestion();
-            Points = 0;
-            Result = string.Empty;
+            dbContext.Questions.FirstOrDefault(q => q.Id == currentQuestionIndex)
+                .Answers = newList;
+
+            dbContext.SaveChanges();
         }
-        */
-    }
-        
-    public class Points
-    {
-        public int Id { get; set; }
-        public List<bool> CheckedAnswers { get; set; }
     }
 }

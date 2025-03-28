@@ -13,5 +13,7 @@ public partial class Answer
 
     public int? QuestionId { get; set; }
 
+    public bool IsChecked { get; set; }
+
     public virtual Question? Question { get; set; }
 }
