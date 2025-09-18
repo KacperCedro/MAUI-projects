@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NavigationTabMauiApp.AnotherPage"
+             Title="AnotherPage">
+    <VerticalStackLayout>
+        <Label 
+            Text="Welcome to AnotherPage"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+    </VerticalStackLayout>
+    <ContentPage.TitleBar>
+        <TitleBar 
+            Title="MAUI"
+            Subtitle="simple app"
+            IsVisible="Collapse"
+            Background="Black"
+            ForegroundColor="White"
+            HeightRequest="50">
+            <TitleBar.Content>
+                <SearchBar Placeholder="MauiSearch"
+                           PlaceholderColor="Azure"
+                           HorizontalOptions="Fill"
+                           VerticalOptions="Center"
+                           />
+            </TitleBar.Content>
+        </TitleBar>
+    </ContentPage.TitleBar>
+</ContentPage>
